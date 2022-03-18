@@ -1,7 +1,7 @@
 <?php 
 session_start();
 include_once("conexao.php");
-$id = $_GET['id'];
+$id = $_GET['id'] ?? '';
 $sql = "SELECT * FROM produto WHERE id = $id";
 $resultado = mysqli_query($conexao,$sql);
 
@@ -33,13 +33,13 @@ if(isset($_SESSION['msg'])){
     echo '</form>';
     echo '</div>';
 
-    $nome = $_POST['nome'];
-    $sku = $_POST['sku'];
-    $foto = $_FILES['foto']['name'];
-    $preco = $_POST['preco'];
-    $estoque = $_POST['estoque'];
+    $nome = $_POST['nome'] ?? '';
+    $sku = $_POST['sku'] ?? '';
+    $foto = $_FILES['foto']['name'] ?? '';
+    $preco = $_POST['preco'] ?? '';
+    $estoque = $_POST['estoque'] ?? '';
 
-    if($nome != '' && $sku != '' && $foto != '' && $preco != '' &&  $estoque != '' && $_POST['buttonEditar'] != ''){
+    if($nome != '' && $sku != '' && $foto != '' && $preco != '' &&  $estoque != '' && isset($_POST['buttonEditar'])){
 
         $query = "UPDATE produto SET nome = '$nome', sku = '$sku', foto = '$foto', preco = '$preco',estoque = '$estoque' WHERE id = $id";
         $resultadoQuery = mysqli_query($conexao, $query);
@@ -53,7 +53,7 @@ if(isset($_SESSION['msg'])){
         }else{
             $_SESSION['msg'] = ' <h2 style=" color:red"> Error Ao Tentar Editar Um Produto </h2>' ;
         }
-    }else if($nome == '' && $sku == '' && $foto == '' && $preco == '' &&  $estoque == '' && $_POST['buttonEditar'] != ''){
+    }else if($nome == '' && $sku == '' && $foto == '' && $preco == '' &&  $estoque == '' && isset($_POST['buttonEditar'])){
 
         $_SESSION['msg'] = ' <h2 style=" color:red"> Error Algum Campo Em Branco </h2>';
     }
